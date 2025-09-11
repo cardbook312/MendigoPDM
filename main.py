@@ -49,7 +49,34 @@ async def mandar_curiosidade():
                 await canal.send(embed=embed)
 
 # Quando o bot ficar online
+mensagens = [
+    "Fala galera! 👋",
+    "Já beberam água hoje? 💧",
+    "Bora jogar alguma coisa?",
+    "Vocês estão on ou só de enfeite?",
+    "O café acabou, e agora?",
+    "Quem vai puxar a call hoje?",
+    "Se rir perdeu. 😂",
+    "Eu ouvi barulho de loot caindo 👀",
+    "Dia de sol, mendigo na cal ☀️",
+    "Hora de farmar, hein?",
+    "Quem aí tá de boa?",
+    "Me deem atenção! 🤖",
+    "Eu sou um bot, mas tenho sentimentos (acho).",
+    "E se eu fosse humano?",
+    "Bora zoar alguém 😈",
+    "Eu não durmo, eu só espero vocês. 🌙",
+    "Tá muito quieto aqui...",
+    "Alguém chama o fundador pra call!",
+    "Mendigo unido jamais será vencido!",
+    "🔥 PDM é o melhor servidor!"
+]
 
+@tasks.loop(minutes=10)
+async def mensagens_automaticas():
+    canal = bot.get_channel(CANAL_PRINCIPAL)  # vai mandar no chat principal
+    if canal:
+        await canal.send(random.choice(mensagens))
 
 # Evento de boas-vindas
 @bot.event
@@ -89,6 +116,9 @@ async def on_ready():
 
     if not mandar_wallpaper_github.is_running():
         mandar_wallpaper_github.start()
+
+        if not mensagens_automaticas.is_running():
+    mensagens_automaticas.start()
 
 
 @tasks.loop(minutes=10)
