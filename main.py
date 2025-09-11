@@ -117,8 +117,9 @@ async def on_ready():
     if not mandar_wallpaper_github.is_running():
         mandar_wallpaper_github.start()
 
-        if not mensagens_automaticas.is_running():
-    mensagens_automaticas.start()
+    if not mensagens_automaticas.is_running():   # <-- linha 120
+        mensagens_automaticas.start()            # <-- precisa estar indentado
+
 
 
 @tasks.loop(minutes=10)
