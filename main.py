@@ -4,8 +4,28 @@ import aiohttp
 import os
 import random
 from dotenv import load_dotenv
+import asyncio
+import discord
+from discord.ext import commands, tasks
+from flask import Flask
+from threading import Thread
+
 
 load_dotenv()  # <- esta linha é obrigatória
+
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot rodando com sucesso!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
 
 
 # IDs dos canais
@@ -271,6 +291,7 @@ async def on_voice_state_update(member, before, after):
 
 
 # Rodar o bot
+keep_alive()
 bot.run(os.getenv("DISCORD_TOKEN"))
 
 
